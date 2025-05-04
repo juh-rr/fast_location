@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.navigate_next),
+            icon: const Icon(Icons.arrow_forward),
             tooltip: 'Histórico de pesquisa',
             onPressed: () => Navigator.push(context, MaterialPageRoute(
                     builder: (context) =>HistoryPage(),
@@ -105,23 +105,27 @@ class _HomePageState extends State<HomePage> {
   Future _searchCep() async {
     _searching(true);
 
-    final cep = _searchCepController.text;
+    late var cep = _searchCepController.text;
 
-    final resultCep = await ViaCepService.fetchCep(cep: cep);
-    print(resultCep.localidade); // Exibindo somente a localidade no terminal
+    var resultCep = await ViaCepService.fetchCep(cep: cep);
     
 
     setState(() {
-      _result = resultCep.toJson();
+      _result = ('${resultCep.logradouro}, ${resultCep.complemento}, ${resultCep.bairro}, ${resultCep.localidade}, ${resultCep.uf} ');
     });
-
     _searching(false);
   }
 
   Widget _buildResultForm() {
     return Container(
       padding: EdgeInsets.only(top: 20.0),
-      child: Text(_result ?? ''),
+      child: 
+      Text(_result ?? '',
+      style: TextStyle(
+      fontSize: 20,
+      fontStyle: FontStyle.italic,
+      fontWeight: FontWeight.bold)
+      )
     );
   }
   }
