@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 //import 'package:search_cep/search_cep.dart';
 import 'package:desafio1/src/services/via_cep_service.dart';
 import 'package:desafio1/src/modules/history/page/history_page.dart';
+import 'package:desafio1/src/modules/home/model/address_model.dart';
+import 'package:desafio1/src/modules/home/repositories/home_local_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   bool _loading = false;
   bool _enableField = true;
   String? _result;
-
+  
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -27,6 +29,7 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
     _searchCepController.clear();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,11 +112,16 @@ class _HomePageState extends State<HomePage> {
 
     var resultCep = await ViaCepService.fetchCep(cep: cep);
     
+    late var address = AddressModel(cep: resultCep.cep, logradouro: resultCep.logradouro, bairro: resultCep.bairro, localidade: resultCep.localidade, uf: resultCep.uf);
+    final addressRepo = HomeLocalRepository();
+    await addressRepo.addAddressRecent(address);
+    var addresses = await addressRepo.getAddressHistory();
+    print('Saved addresses: ${addresses!.map((a) => a.localidade).toList()}');
 
     setState(() {
       _result = ('${resultCep.logradouro}, ${resultCep.complemento}, ${resultCep.bairro}, ${resultCep.localidade}, ${resultCep.uf} ');
-    });
-    _searching(false);
+      });
+    _searching(false); 
   }
 
   Widget _buildResultForm() {
