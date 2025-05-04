@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 //import 'package:search_cep/search_cep.dart';
 import 'package:desafio1/src/services/via_cep_service.dart';
+import 'package:desafio1/src/modules/history/page/history_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _searchCepController = TextEditingController();
+  final _searchCepController = TextEditingController(); //ed de 'var' para 'final'
   bool _loading = false;
   bool _enableField = true;
   String? _result;
@@ -34,9 +35,19 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.green,
         title: Text("Fast Location"),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.navigate_next),
+            tooltip: 'Histórico de pesquisa',
+            onPressed: () => Navigator.push(context, MaterialPageRoute(
+                    builder: (context) =>HistoryPage(),
+                  ),
+            ),
+          ),
+            ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[

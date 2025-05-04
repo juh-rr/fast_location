@@ -6,7 +6,6 @@ import 'package:desafio1/src/shared/storage/hive_config.dart';
 import 'package:flutter/material.dart';
 //import 'package:search_cep/search_cep.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   HiveConfig.initHiveDatabase();
