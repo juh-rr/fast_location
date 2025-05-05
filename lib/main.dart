@@ -4,8 +4,6 @@ import 'package:desafio1/src/modules/initial/page/initial_page.dart';
 import 'package:desafio1/src/routes/app_router.dart';
 import 'package:desafio1/src/shared/storage/hive_config.dart';
 import 'package:flutter/material.dart';
-//import 'package:desafio1/src/modules/home/repositories/home_local_repository.dart';
-//import 'package:search_cep/search_cep.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
